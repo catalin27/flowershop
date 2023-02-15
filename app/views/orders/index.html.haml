@@ -1,0 +1,4 @@
+%ul.orders
+  - @orders.each do |order|
+    %li.order
+      = "#{order.sender_name} sends #{order.flowers} to #{order.recipient_name}"
