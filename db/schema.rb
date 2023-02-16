@@ -19,7 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_15_200514) do
     t.string "recipient_name"
     t.string "delivery_address"
     t.string "flowers"
-    t.string "state"
+    t.integer "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

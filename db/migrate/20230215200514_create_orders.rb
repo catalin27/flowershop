@@ -5,7 +5,7 @@ class CreateOrders < ActiveRecord::Migration[7.0]
       t.string :recipient_name
       t.string :delivery_address
       t.string :flowers
-      t.string :state
+      t.integer :state
 
       t.timestamps
     end

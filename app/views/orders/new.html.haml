@@ -1,0 +1,25 @@
+.modal.fade#create-order-modal{ tabindex: "-1", "aria-labelledby": "create-order-title", "aria-hidden": "true"}
+  .modal-dialog.modal-dialog-centered
+    = form_with url: "/orders", method: :post, class: "modal-content" do |form|
+      .modal-header
+        %h1.modal-title.fs-5#create-order-title New Order
+        %button.btn-close{ type: "button", "data-bs-dismiss": "modal", "aria-label": "Close" }
+      .modal-body
+        = 'blabla'
+        = @order&.errors&.full_messages&.join
+        .mb-3
+          = form.label :sender_name, "Sender Name", class: "form-label"
+          = form.text_field :sender_name, class: "form-control"
+        .mb-3
+          = form.label :recipient_name, "Recipient Name", class: "form-label"
+          = form.text_field :recipient_name, class: "form-control"
+        .mb-3
+          -# TODO: get flowers via a helper from some frozen records
+          = form.label :flowers, "Flowers", class: "form-label"
+          = form.text_field :flowers, class: "form-control"
+        .mb-3
+          = form.label :delivery_address, "Delivery Address", class: "form-label"
+          = form.text_field :delivery_address, class: "form-control"
+      .modal-footer
+        %button.btn.btn-secondary{ type: "button", "data-bs-dismiss": "modal" } Close
+        %button.btn.btn-primary{ type: "submit" } Create Order

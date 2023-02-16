@@ -1,6 +1,39 @@
-.row.g-3
+-# = javascript_include_tag 'orders/index'
+= render template: "orders/new"
+
+#orders.row.g-3
   - @orders.each do |order|
-    .col-xs-12.col-sm-6.col-md-4.col-lg-3
-      .card
-        .card-body
-          = render template: "orders/show", locals: {order: order}
+    = render template: "orders/show", locals: {order: order}
+
+:javascript
+  setInterval(() => {
+    fetch('http://localhost:3000/orders', {
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(response => response.json())
+    .then(orders => {
+      if (orders.length === 0) return
+
+      const fetched_orders = orders.map(order => `
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <strong>${order.sender_name}</strong>
+              wants to send
+              <strong>${order.flowers}</strong>
+              to
+              <strong>${order.recipient_name}</strong>
+            </div>
+            <div class="card-footer">
+              Deliver to:
+              <address class="d-inline fst-italic m-0">${order.delivery_address}</address>
+            </div>
+          </div>
+        </div>
+      `).join('')
+
+      document.querySelector('#orders').innerHTML = fetched_orders
+      console.log('Did it')
+    })
+  }, 15000)
