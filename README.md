@@ -1,24 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Ruby version
+Developed with `ruby 3.1.2` and `Rails 7.0.4`
 
-Things you may want to cover:
+### Configuration
+- clone repo
+- make sure current branch is `dashboard`
+- `bundle install`
+- `rake db:setup` will run migrations and populate DB from seeds
+- `rails server`
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Test suite
+Done with Rspec. `bundle exec rspec` or simply `rspec` runs the entire test suite.
