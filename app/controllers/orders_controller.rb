@@ -2,9 +2,9 @@ class OrdersController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    # TODO: filter_params
     # TODO: paginate
-    @orders = Order.all
+    filter_params = Order.states.keys.include?(params[:state]) ? { state: params[:state] } : {}
+    @orders = Order.where(filter_params).order(:id)
 
     respond_to do |format|
       format.html {}
@@ -40,6 +40,6 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.permit(:sender_name, :recipient_name, :flowers, :delivery_address)
+    params.permit(:sender_name, :recipient_name, :flowers, :delivery_address, :state)
   end
 end

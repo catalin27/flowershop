@@ -6,6 +6,14 @@
       %strong= order.flowers
       to
       %strong= order.recipient_name
+      .mt-3
+        State:
+        .btn-group.btn-group-sm{ role: "group" }
+          %input.btn-check.btn-state{ type: "radio", id: "btn-pending-#{order.id}", name: "btn-state-#{order.id}", checked: order.pending?}
+          %label.btn.btn-outline-primary{ for: "btn-pending-#{order.id}" } Pending
+
+          %input.btn-check.btn-state{ type: "radio", id: "btn-delivered-#{order.id}", name: "btn-state-#{order.id}", checked: order.delivered?}
+          %label.btn.btn-outline-primary{ for: "btn-delivered-#{order.id}" } Delivered
     .card-footer
       Deliver to:
       %address.d-inline.fst-italic.m-0= order.delivery_address
