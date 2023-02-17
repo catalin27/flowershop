@@ -1,0 +1,62 @@
+.modal.fade#create-order-modal{ tabindex: "-1", "aria-labelledby": "create-order-title", "aria-hidden": "true"}
+  .modal-dialog.modal-dialog-centered
+    = form_with url: "/orders", method: :post, class: "modal-content", id: "create-order-form" do |form|
+      .modal-header
+        %h1.modal-title.fs-5#create-order-title New Order
+        %button.btn-close{ type: "button", "data-bs-dismiss": "modal", "aria-label": "Close" }
+      .modal-body
+        = @order&.errors&.full_messages&.join
+        .mb-3
+          = form.label :sender_name, "Sender Name", class: "form-label"
+          = form.text_field :sender_name, class: "form-control"
+        .mb-3
+          = form.label :recipient_name, "Recipient Name", class: "form-label"
+          = form.text_field :recipient_name, class: "form-control"
+        .mb-3
+          = form.label :flowers, "Flowers", class: "form-label"
+          = form.select :flowers, Flower::FLOWER_NAMES, {}, { class: "form-select" }
+        .mb-3
+          = form.label :delivery_address, "Delivery Address", class: "form-label"
+          = form.text_field :delivery_address, class: "form-control"
+        .errors.mb-3.alert.alert-danger.d-none
+      .modal-footer
+        %button.btn.btn-secondary{ type: "button", "data-bs-dismiss": "modal" } Close
+        %button.btn.btn-primary{ type: "submit" } Create Order
+
+:javascript
+  const createForm = document.querySelector('#create-order-form')
+  createForm.addEventListener('submit', e => {
+    e.preventDefault()
+
+    const formData = new FormData(createForm)
+    const formDataObject = {}
+    for (let [key, value] of formData) {
+      formDataObject[key] = value
+    }
+
+    fetch('http://localhost:3000/orders', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formDataObject)
+    }).then(response => {
+      switch(response.status) {
+        case 200:
+        case 201:
+          window.location.reload()
+          break
+        case 422:
+          return response.json()
+          break
+      }
+    }).then(error => {
+      const error_messages = Object.entries(error).map(([attribute, messages]) =>
+        messages.map(message => `${attribute.replaceAll('_', ' ')} ${message}`)
+      ).flat().join('<br/>')
+
+      document.querySelector('.errors').innerHTML = error_messages
+      document.querySelector('.errors').classList.remove('d-none')
+    })
+  })

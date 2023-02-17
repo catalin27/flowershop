@@ -1,0 +1,19 @@
+.col-xs-12.col-sm-6.col-md-4.col-lg-3
+  .card
+    .card-body
+      %strong= order.sender_name
+      wants to send
+      %strong= order.flowers
+      to
+      %strong= order.recipient_name
+      .mt-3
+        State:
+        .btn-group.btn-group-sm{ role: "group" }
+          %input.btn-check.btn-state{ type: "radio", id: "btn-pending-#{order.id}", name: "btn-state-#{order.id}", checked: order.pending?}
+          %label.btn.btn-outline-primary{ for: "btn-pending-#{order.id}" } Pending
+
+          %input.btn-check.btn-state{ type: "radio", id: "btn-delivered-#{order.id}", name: "btn-state-#{order.id}", checked: order.delivered?}
+          %label.btn.btn-outline-primary{ for: "btn-delivered-#{order.id}" } Delivered
+    .card-footer
+      Deliver to:
+      %address.d-inline.fst-italic.m-0= order.delivery_address
